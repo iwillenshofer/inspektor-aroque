@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package inspection.v1;
+option go_package = "github.com/AdrianWR/inspektor/pb";
+
+import "google/api/annotations.proto";
+
+message App {
+  string name = 1;
+  string version = 2;
+  Pod pod = 3;
+}
+
+message Pod {
+  string name = 1;
+  string namespace = 2;
+  string ip = 3;
+}
+
+message GetInspectionRequest {}
+
+message GetInspectionResponse {
+  App app = 1;
+}
+
+service InspectionService {
+  rpc GetInspection (GetInspectionRequest) returns (GetInspectionResponse) {
+    option (google.api.http) = {
+      get: "/v1/inspect"
+    };
+  }
+}
