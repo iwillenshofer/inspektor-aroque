@@ -22,23 +22,39 @@ type ServerConfig struct {
 }
 
 // NewConfig returns a new Config struct
-func NewConfig() *Config {
-	viper := viper.New()
+func NewConfig() (Config, error) {
+
+	// Set the default values for the configuration
+	viper.SetDefault("server.host", "0.0.0.0")
+	viper.SetDefault("server.port", 8080)
+
+	// Set the configuration file name
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("./config")
-	viper.AutomaticEnv()
-	viper.SetEnvPrefix("inspektor")
-	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", "_"))
+
+	// Read the configuration file
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Fatalf("Error reading config file, %s", err)
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			log.Println("Configuration file not found")
+		} else {
+			return Config{}, err
+		}
 	}
-	var config Config
-	err = viper.Unmarshal(&config)
+
+	// Set the environment variables prefix
+	viper.SetEnvPrefix("inspektor")
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	viper.AutomaticEnv()
+
+	// Unmarshal the configuration file into the Config struct
+	var cfg Config
+	err = viper.Unmarshal(&cfg)
 	if err != nil {
-		log.Fatalf("Error unmarshalling config file, %s", err)
+		return Config{}, err
 	}
-	return &config
+
+	return cfg, nil
 }

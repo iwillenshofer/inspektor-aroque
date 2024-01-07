@@ -9,9 +9,6 @@ PROTOC_GEN_GO				= $(GOBIN)/protoc-gen-go
 PROTOC_GEN_GO_GRPC	= $(GOBIN)/protoc-gen-go-grpc
 ARCH          			= $(shell uname -p)
 
-BUF_VERSION   			:=	v1.28.1
-SWAGGER_UI_VERSION	:=	v4.15.5
-
 # Go Options
 PKG         := ./...
 TAGS        :=
@@ -31,32 +28,11 @@ all: build
 build: $(BINDIR)/$(BINNAME)
 
 $(BINDIR)/$(BINNAME): $(SRC)
-	GO111MODULE=on CGO_ENABLED=$(CGO_ENABLED) go build $(GOFLAGS) -trimpath -tags '$(TAGS)' -ldflags '$(LDFLAGS)' -o '$(BINDIR)'/$(BINNAME) ./cmd/gateway
+	CGO_ENABLED=$(CGO_ENABLED) go build -o '$(BINDIR)/$(BINNAME)' -ldflags '$(LDFLAGS)' $(PKG)
 
 .PHONY: run
 run: build ## Run the binary
 	$(BINDIR)/$(BINNAME)
-
-# #########
-# # Proto #
-# #########
-
-.PHONY: generate
-generate: proto/generate
-
-.PHONY: proto/generate
-proto/generate: ## Generate proto files
-	go run github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION) generate
-
-
-.PHONY: proto/lint
-proto/lint: ## Lint proto files
-	go run github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION) lint
-	go run github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION) breaking --against '.git#branch=main'
-
-.PHONY: proto/clean
-proto/clean: ## Clean proto files
-	rm -rf proto/gen
 
 # ------------------------------------------------------------------------------
 # dependencies
@@ -68,10 +44,6 @@ download: ## Download dependencies
 .PHONY: tidy
 tidy: download ## Update go.mod and go.sum
 	go mod tidy
-
-.PHONY: vendor
-vendor: tidy ## Update vendor directory
-	go mod vendor
 
 # ------------------------------------------------------------------------------
 # docker
