@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/AdrianWR/inspektor/internal/http/rest"
+	"github.com/AdrianWR/inspektor/internal/http"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 }
 
 func run(ctx context.Context) error {
-	server, err := rest.NewServer()
+	server, err := http.NewServer()
 	if err != nil {
 		return err
 	}

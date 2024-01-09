@@ -1,12 +1,10 @@
 BINDIR	:= $(CURDIR)/bin
-BINNAME	?= inspektor
+BINNAME	?= app
 
 GOBIN         			= $(shell go env GOBIN)
 ifeq ($(GOBIN),)
 GOBIN         			= $(shell go env GOPATH)/bin
 endif
-PROTOC_GEN_GO				= $(GOBIN)/protoc-gen-go
-PROTOC_GEN_GO_GRPC	= $(GOBIN)/protoc-gen-go-grpc
 ARCH          			= $(shell uname -p)
 
 # Go Options
@@ -14,7 +12,7 @@ PKG         := ./...
 TAGS        :=
 TESTS       := .
 TESTFLAGS   :=
-LDFLAGS     := -w -s
+LDFLAGS     := -w
 GOFLAGS     :=
 CGO_ENABLED ?= 0
 
@@ -28,7 +26,8 @@ all: build
 build: $(BINDIR)/$(BINNAME)
 
 $(BINDIR)/$(BINNAME): $(SRC)
-	CGO_ENABLED=$(CGO_ENABLED) go build -o '$(BINDIR)/$(BINNAME)' -ldflags '$(LDFLAGS)' $(PKG)
+	mkdir -p $(BINDIR)
+	CGO_ENABLED=$(CGO_ENABLED) go build -o $(BINDIR) -ldflags $(LDFLAGS) $(PKG)
 
 .PHONY: run
 run: build ## Run the binary
