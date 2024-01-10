@@ -22,7 +22,7 @@ func getPodIP() string {
 func (s Service) Get(ctx context.Context) (model.App, error) {
 	return model.App{
 		Name:    "inspektor",
-		Version: "0.1.0",
+		Version: "v1",
 		Pod: model.Pod{
 			Name:      getPodName(),
 			Namespace: getPodNamespace(),
