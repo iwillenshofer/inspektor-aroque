@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inspektor
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: inspektor
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: inspektor
+    spec:
+      containers:
+        - name: inspektor
+          image: awroque/inspektor:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
