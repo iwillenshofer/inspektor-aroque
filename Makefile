@@ -1,5 +1,5 @@
 BINDIR	:= $(CURDIR)/bin
-BINNAME	?= app
+BINNAME	?= inspektor
 
 GOBIN         			= $(shell go env GOBIN)
 ifeq ($(GOBIN),)
