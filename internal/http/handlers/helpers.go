@@ -27,8 +27,8 @@ func (s service) respond(w http.ResponseWriter, data interface{}, status int) {
 		respData = data
 	}
 
-	w.WriteHeader(status)
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
 	if data != nil {
 		err := json.NewEncoder(w).Encode(respData)
 		if err != nil {

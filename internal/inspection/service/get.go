@@ -8,15 +8,19 @@ import (
 )
 
 func getPodName() string {
-	return os.Getenv("POD_NAME")
+	return os.Getenv("HOSTNAME")
 }
 
 func getPodNamespace() string {
-	return os.Getenv("POD_NAMESPACE")
+	namespace, err := os.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace")
+	if err != nil {
+		return ""
+	}
+	return string(namespace)
 }
 
 func getPodIP() string {
-	return os.Getenv("POD_IP")
+	return os.Getenv("KUBERNETES_SERVICE_HOST")
 }
 
 func (s Service) Get(ctx context.Context) (model.App, error) {
