@@ -1,4 +1,4 @@
-module github.com/AdrianWR/inspektor
+module inspektor
 
 go 1.21.4
 

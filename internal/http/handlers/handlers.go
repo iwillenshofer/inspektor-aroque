@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	inspectionService "github.com/AdrianWR/inspektor/internal/inspection/service"
+	inspectionService "inspektor/internal/inspection/service"
 	"go.uber.org/zap"
 )
 

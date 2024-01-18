@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	erro "github.com/AdrianWR/inspektor/pkg/errors"
+	erro "inspektor/pkg/errors"
 )
 
 func (s service) respond(w http.ResponseWriter, data interface{}, status int) {

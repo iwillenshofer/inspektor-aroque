@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"github.com/AdrianWR/inspektor/internal/inspection/model"
+	"inspektor/internal/inspection/model"
 )
 
 func getPodName() string {

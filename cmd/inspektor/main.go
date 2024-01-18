@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/AdrianWR/inspektor/internal/http"
+	"inspektor/internal/http"
 )
 
 func main() {

@@ -13,7 +13,7 @@ import (
 	"github.com/rs/cors"
 	"go.uber.org/zap"
 
-	"github.com/AdrianWR/inspektor/internal/config"
+	"inspektor/internal/config"
 )
 
 type Server struct {

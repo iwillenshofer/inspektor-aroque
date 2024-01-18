@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/AdrianWR/inspektor/internal/inspection/model"
+	"inspektor/internal/inspection/model"
 )
 
 func (s service) Get() http.HandlerFunc {
