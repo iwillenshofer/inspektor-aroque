@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: inspektor
-          image: iwillenshofer/inspektor:v2
+          image: iwillenshofer/inspektor:v1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
