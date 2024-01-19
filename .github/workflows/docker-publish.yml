@@ -10,7 +10,7 @@ on:
     types: [published]
 
 env:
-  IMAGE_NAME: awroque/inspektor
+  IMAGE_NAME: iwillenshofer/inspektor
 
 jobs:
   push_to_registry:
